@@ -1,0 +1,119 @@
+<!-- 
+  
+Author: Lepadatu Radu
+Website: https://github.com/Radulepy | kronweb.ro 
+Date: 03.2022
+
+Project: Country/City search in JSON file for address checkout/lookup 
+
+-->
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>Hello Lepy!</title>
+
+</head>
+
+<body class="container-fluid">
+
+  <h2> Find Town/Country in a JSON list: <span id="oras"></span></h2>
+  <p> Useful for address search/address form/checkout!</p>
+
+  <input type="text" id="judetInput" placeholder="JUDET">
+  <input type="text" id="orasInput" placeholder="ORAS">
+
+  <div class="col-4">
+    <label> <b> Judete Recomandate: </b> </label>
+    <span id="judetRecomandat"></span>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3">
+        <br>
+        <label> <b> Toate Orasele din Judet: </b> </label> <br>
+        <span id="orasRecomandat"></span>
+      </div>
+      <div class="col-3">
+        <br>
+        <label> <b> Oras(e) Cautat: </b> </label> <br>
+        <span id="orasCautat"></span>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
+<!--TODO: Export Script Externally, reset inputs when changed? -->
+<script type="module">
+
+  // choose only one (minified / orignial), keep assert so we can successfully add the external JSON file
+  import citiesRO from './RO_minified.json' assert {type: 'json'};
+  import citiesRO2 from './Romania.json' assert {type: 'json'};
+
+  let oraseDinJudet = []; // every city from the country 
+  let toateJudetele = Object.keys(citiesRO); // get all countries name (only countries not towns), for a quicker search
+
+  //* add event listner to country input @keyup
+  document.getElementById('judetInput').addEventListener('keyup', function (input) {
+
+    // get country input value
+    let inputValue = document.getElementById('judetInput').value;
+
+    // set the title to input value
+    document.getElementById('oras').innerHTML = inputValue;
+
+    // look for specific country in all the countries
+    let cautaJudet = toateJudetele.filter((e) => e.includes(inputValue.toUpperCase()));
+
+    //display the country (single)
+    document.getElementById('judetRecomandat').innerHTML = cautaJudet + "<br>";
+
+    let judet = cautaJudet.toString(); // take the country string only
+
+    // Single country found (so we can only display the cities from one specific country)
+    if (!judet.includes(',')) {
+      oraseDinJudet = []; // reset array
+
+      citiesRO[judet].forEach(element => { // fill array with all the cities (duplicate)
+        oraseDinJudet.push("<br>" + element.name);
+      });
+
+      // display all cities from the single country
+      document.getElementById('orasRecomandat').innerHTML = oraseDinJudet;
+    }
+  });
+
+  //* add event listner to city input @keyup
+  document.getElementById('orasInput').addEventListener('keyup', function (input) {
+
+    // get input value
+    let inputValue = document.getElementById('orasInput').value;
+
+    // filter all the cities with the help of the input value
+    let oraseCautate = oraseDinJudet.filter((e) => e.includes(inputValue.toUpperCase()))
+
+    // display searched city
+    document.getElementById('orasCautat').innerHTML = oraseCautate;
+
+  });
+
+</script>
