@@ -1,5 +1,5 @@
 # CityAddressLookup
-Simple City and Country address lookup for checkout address form. Plain JavaScript and Bootstrap5.
+Simple JavScript City and Country address lookup for checkout address form. Plain JavaScript and Bootstrap5.
 
 ## This is a starting point for address lookup or city/country address form.
 
