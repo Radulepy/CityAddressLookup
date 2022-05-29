@@ -1,6 +1,7 @@
 # CityAddressLookup
 Romanian Cities Lookup. (translated: Cautare Oras si Judet din Romania)
-Simple JavScript City and Country address lookup for checkout address form. Plain JavaScript and Bootstrap5.
+
+Simple JavaScript City and Country address lookup for checkout address form. Plain JavaScript and Bootstrap5.
 
 ## This is a starting point for address lookup or city/country address form.
 
